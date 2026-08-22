@@ -1,0 +1,34 @@
+[
+  {
+    "id": "pol_sfa_buffer",
+    "date": "2026-08-08",
+    "title": "SFA stockpile reporting window",
+    "body": "Synthetic policy note: next dual-inventory attestation for participating importers is due mid-September. Commercial stock cannot be counted toward the emergency stockpile.",
+    "severity": "info",
+    "dataClass": "common"
+  },
+  {
+    "id": "pol_mekong_weather",
+    "date": "2026-08-12",
+    "title": "Mekong late-season rainfall",
+    "body": "Synthetic weather note: delayed rains in the Mekong Delta raise a modest risk of tighter 5% broken availability in 45–60 days. Not a disruption. Treat as elevated, not high.",
+    "severity": "elevated",
+    "dataClass": "common"
+  },
+  {
+    "id": "pol_freight_ease",
+    "date": "2026-08-14",
+    "title": "Intra-ASEAN bulk freight eased",
+    "body": "Synthetic logistics note: Ho Chi Minh–Singapore and Bangkok–Singapore parcels have eased about 2% over the last fortnight.",
+    "severity": "info",
+    "dataClass": "common"
+  },
+  {
+    "id": "pol_inr_watch",
+    "date": "2026-07-22",
+    "title": "India export-policy watch",
+    "body": "Synthetic policy note: no new restriction this week. Keep Pakistan Basmati as a watch origin rather than a primary cover.",
+    "severity": "info",
+    "dataClass": "common"
+  }
+]

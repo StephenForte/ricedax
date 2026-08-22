@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+:root {
+  --paper: #f4efe4;
+  --paper-2: #ebe4d4;
+  --ink: #1c1914;
+  --ink-soft: #5c564c;
+  --rule: #d4cbb8;
+  --gold: #9a6b2f;
+  --gold-2: #c4893c;
+  --buy: #2f5d3a;
+  --watch: #8a5a1f;
+  --hold: #5a5852;
+  --lock: #3d4a3f;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-paper-2: var(--paper-2);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-rule: var(--rule);
+  --color-gold: var(--gold);
+  --color-gold-2: var(--gold-2);
+  --color-buy: var(--buy);
+  --color-watch: var(--watch);
+  --color-hold: var(--hold);
+  --font-sans: var(--font-sans);
+  --font-serif: var(--font-serif);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+body {
+  font-family: var(--font-sans), "IBM Plex Sans", system-ui, sans-serif;
+  min-height: 100vh;
+}
+
+a { color: inherit; text-decoration: none; }
+
+.serif { font-family: var(--font-serif), "Newsreader", Georgia, serif; }
+
+.panel {
+  background: #fffdf7;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.55rem 0.95rem;
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--ink);
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}

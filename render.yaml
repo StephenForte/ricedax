@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: ricedax-demo
+    runtime: node
+    plan: starter
+    region: singapore
+    healthCheckPath: /health
+    autoDeploy: true
+    buildCommand: npm ci && npx prisma generate && npm run build
+    startCommand: npm start
+    domains:
+      - ricedax.com
+      - www.ricedax.com
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        value: file:./prisma/dev.db
+      - key: DEMO_PASSWORD
+        sync: false
+      - key: AUDIT_ANCHOR_KEY
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: COPILOT_DAILY_CAP
+        value: "80"

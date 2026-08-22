@@ -1,0 +1,31 @@
+# RiceDAX
+
+Private decision cockpit for a Singapore rice trader, plus a thin shared-market layer. This repository is the EnterpriseSG walkthrough: synthetic Pacific Grain data, a typed BUY/WATCH/HOLD engine, copilot, RFQ compare, and a hash-chained audit log.
+
+Live exhibit: [https://ricedax.com](https://ricedax.com) (passphrase shared separately).
+
+## Local
+
+```bash
+cp .env.example .env
+npm install
+node scripts/gen-market.mjs
+npx prisma db push
+npm run db:seed
+npm test
+npm run dev
+```
+
+Demo passphrase defaults to `pacific`.
+
+`npm start` seeds SQLite and binds `0.0.0.0:$PORT` (Render).
+
+## What is real vs fake
+
+See [docs/LEARNING.md](docs/LEARNING.md). Rice prices and freight are synthetic. USD/SGD can be live via Frankfurter. The engine is rules, not a trained model.
+
+## Docs
+
+- [docs/demo-script.md](docs/demo-script.md) — three-minute walkthrough
+- [docs/eoi-proposal.md](docs/eoi-proposal.md) — FormSG draft (team and dollars still open)
+- [docs/LEARNING.md](docs/LEARNING.md) — easy / hard / fake, plus post-EOI spikes

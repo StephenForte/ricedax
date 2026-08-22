@@ -1,0 +1,8 @@
+{
+  "id": "wc_pacific",
+  "traderId": "pacific_grain",
+  "inventoryTiedSgd": 1520000,
+  "openPoTiedSgd": 286000,
+  "cashSgd": 410000,
+  "dataClass": "private"
+}

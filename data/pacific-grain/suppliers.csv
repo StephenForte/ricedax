@@ -1,0 +1,5 @@
+supplier_id,name,origin,typical_lead_days,last_paid_usd_per_t,incoterm
+sup_mekong,Mekong Rice Export JSC,Vietnam,18,615,FOB Ho Chi Minh
+sup_saigon,Saigon Staple Co,Vietnam,21,618,FOB Ho Chi Minh
+sup_bangkok,Chao Phraya Mills,Thailand,22,648,FOB Bangkok
+sup_karachi,Indus Grain Traders,Pakistan,28,552,FOB Karachi

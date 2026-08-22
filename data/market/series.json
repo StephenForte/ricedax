@@ -1,0 +1,62 @@
+[
+  {
+    "id": "ser_vnm",
+    "seriesKey": "vnm_5brk_fob",
+    "label": "Vietnam 5% broken FOB",
+    "unit": "USD/t",
+    "origin": "Vietnam",
+    "dataClass": "synthetic",
+    "source": "synthetic",
+    "file": "vnm_5brk_fob.csv"
+  },
+  {
+    "id": "ser_tha",
+    "seriesKey": "tha_hommali_fob",
+    "label": "Thai Hom Mali FOB",
+    "unit": "USD/t",
+    "origin": "Thailand",
+    "dataClass": "synthetic",
+    "source": "synthetic",
+    "file": "tha_hommali_fob.csv"
+  },
+  {
+    "id": "ser_pak",
+    "seriesKey": "pak_basmati_fob",
+    "label": "Pakistan Basmati FOB",
+    "unit": "USD/t",
+    "origin": "Pakistan",
+    "dataClass": "synthetic",
+    "source": "synthetic",
+    "file": "pak_basmati_fob.csv"
+  },
+  {
+    "id": "ser_fr_vnm",
+    "seriesKey": "freight_hcm_sin",
+    "label": "Freight Ho Chi Minh–Singapore",
+    "unit": "USD/t",
+    "origin": "Vietnam",
+    "dataClass": "synthetic",
+    "source": "synthetic",
+    "file": "freight_hcm_sin.csv"
+  },
+  {
+    "id": "ser_fr_tha",
+    "seriesKey": "freight_bkk_sin",
+    "label": "Freight Bangkok–Singapore",
+    "unit": "USD/t",
+    "origin": "Thailand",
+    "dataClass": "synthetic",
+    "source": "synthetic",
+    "file": "freight_bkk_sin.csv"
+  },
+  {
+    "id": "ser_fx",
+    "seriesKey": "usd_sgd",
+    "label": "USD/SGD",
+    "unit": "SGD per USD",
+    "origin": null,
+    "dataClass": "public",
+    "source": "public",
+    "file": "usd_sgd.csv"
+  }
+]

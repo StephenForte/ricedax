@@ -1,0 +1,236 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Trader {
+  id             String   @id
+  name           String
+  country        String
+  dataClass      String   @default("private")
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  inventoryLots  InventoryLot[]
+  stockpile      StockpilePosition?
+  sales          SaleWeek[]
+  purchaseOrders PurchaseOrder[]
+  recommendations Recommendation[]
+  rfqs           Rfq[]
+}
+
+model InventoryLot {
+  id              String   @id
+  traderId        String
+  book            String // commercial | stockpile
+  origin          String
+  grade           String
+  sku             String
+  tonnes          Float
+  daysOfCover     Float?
+  unitCostUsd     Float
+  dataClass       String   @default("private")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  trader          Trader   @relation(fields: [traderId], references: [id])
+
+  @@index([traderId, book])
+}
+
+model StockpilePosition {
+  id                  String   @id
+  traderId            String   @unique
+  requiredTonnes      Float
+  heldTonnes          Float
+  bufferTonnes        Float
+  status              String
+  sfaRuleNote         String
+  dataClass           String   @default("private")
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  trader              Trader   @relation(fields: [traderId], references: [id])
+}
+
+model SaleWeek {
+  id         String   @id
+  traderId   String
+  weekEnding String
+  tonnes     Float
+  origin     String
+  grade      String
+  dataClass  String   @default("private")
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  trader     Trader   @relation(fields: [traderId], references: [id])
+
+  @@index([traderId, weekEnding])
+}
+
+model Supplier {
+  id                String   @id
+  name              String
+  origin            String
+  typicalLeadDays   Int
+  lastPaidUsdPerT   Float
+  incoterm          String
+  dataClass         String   @default("private")
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  quotes            Quote[]
+}
+
+model PurchaseOrder {
+  id          String   @id
+  traderId    String
+  supplierId  String
+  sku         String
+  origin      String
+  grade       String
+  tonnes      Float
+  status      String
+  landedUsdPerT Float
+  orderedOn   String
+  eta         String?
+  dataClass   String   @default("private")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  trader      Trader   @relation(fields: [traderId], references: [id])
+}
+
+model MarketSeries {
+  id         String   @id
+  seriesKey  String
+  label      String
+  unit       String
+  origin     String?
+  dataClass  String
+  source     String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  points     MarketPoint[]
+}
+
+model MarketPoint {
+  id        String   @id @default(cuid())
+  seriesId  String
+  date      String
+  value     Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  series    MarketSeries @relation(fields: [seriesId], references: [id], onDelete: Cascade)
+
+  @@index([seriesId, date])
+}
+
+model PolicyNote {
+  id        String   @id
+  date      String
+  title     String
+  body      String
+  severity  String
+  dataClass String   @default("common")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model WorkingCapital {
+  id                 String   @id
+  traderId           String   @unique
+  inventoryTiedSgd   Float
+  openPoTiedSgd      Float
+  cashSgd            Float
+  dataClass          String   @default("private")
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
+
+model Recommendation {
+  id              String   @id
+  traderId        String
+  status          String
+  action          String
+  origin          String
+  grade           String
+  sku             String
+  tonnes          Float
+  windowDaysLow   Int
+  windowDaysHigh  Int
+  confidence      Int
+  outputJson      String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  trader          Trader   @relation(fields: [traderId], references: [id])
+  rfqs            Rfq[]
+
+  @@index([traderId, status])
+}
+
+model Rfq {
+  id               String   @id
+  traderId         String
+  recommendationId String
+  status           String
+  payloadJson      String
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  trader           Trader   @relation(fields: [traderId], references: [id])
+  recommendation   Recommendation @relation(fields: [recommendationId], references: [id])
+  quotes           Quote[]
+}
+
+model Quote {
+  id            String   @id
+  rfqId         String
+  supplierId    String
+  fobUsdPerT    Float
+  freightUsdPerT Float
+  landedUsdPerT Float
+  leadDays      Int
+  terms         String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  rfq           Rfq      @relation(fields: [rfqId], references: [id], onDelete: Cascade)
+  supplier      Supplier @relation(fields: [supplierId], references: [id])
+}
+
+model AuditEvent {
+  id        Int      @id @default(autoincrement())
+  actor     String   @default("system")
+  action    String
+  subjectId String?
+  detail    String   @default("{}")
+  hash      String
+  prevHash  String
+  createdAt DateTime @default(now())
+}
+
+model AuditCheckpoint {
+  id          Int      @id @default(autoincrement())
+  lastEventId Int
+  chainHash   String
+  signature   String
+  createdAt   DateTime @default(now())
+}
+
+model CopilotTurn {
+  id        String   @id @default(cuid())
+  question  String
+  answer    String
+  toolsJson String   @default("[]")
+  createdAt DateTime @default(now())
+}
+
+model ScorecardMetric {
+  id          String   @id
+  dimension   String
+  label       String
+  baseline    String
+  ricedax     String
+  unit        String
+  note        String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
