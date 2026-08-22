@@ -6,7 +6,7 @@ services:
     region: singapore
     healthCheckPath: /health
     autoDeploy: true
-    buildCommand: npm ci && npx prisma generate && npm run build
+    buildCommand: npm ci --include=dev && npx prisma generate && npm run build
     startCommand: npm start
     domains:
       - ricedax.com
