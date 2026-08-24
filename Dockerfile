@@ -1,4 +1,8 @@
 FROM node:22-bookworm-slim
+# Prisma's query engine needs OpenSSL on Debian bookworm; slim does not ship it.
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends openssl ca-certificates \
+  && rm -rf /var/lib/apt/lists/*
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci

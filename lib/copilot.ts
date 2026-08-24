@@ -1,5 +1,5 @@
 import { appendAudit } from "./audit";
-import { followUpsFor, matchCopilotIntent } from "./copilot-intent";
+import { followUpsFor, matchCopilotIntent, waitDeskAnswer } from "./copilot-intent";
 import { prisma } from "./db";
 import { applyShocks, BASE_INPUTS, recommend, type RecommendationOutput } from "./engine";
 import { actionLabel, formatMt, SHIPMENT_PERIOD } from "./language";
@@ -47,7 +47,7 @@ export async function askCopilot(question: string): Promise<CopilotResult> {
   if (intent === "wait") {
     tools.push({ name: "getRecommendation" });
     const { output } = await getRecommendation();
-    const answer = `${output.counterfactual.narrative} Next: get firm offers from approved suppliers, or hold off if you can accept 49 days of cover.`;
+    const answer = waitDeskAnswer(output.counterfactual.narrative, output.counterfactual.expectedRunwayDays);
     await logTurn(question, answer, tools);
     return pack(intent, answer, tools, output);
   }

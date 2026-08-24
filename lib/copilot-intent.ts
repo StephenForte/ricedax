@@ -51,3 +51,7 @@ export function followUpsFor(intent: CopilotIntent): string[] {
   }
   return ["Why Vietnam over Thailand?", "What's on the water?", "Can I hold off two weeks?"];
 }
+
+export function waitDeskAnswer(narrative: string, expectedRunwayDays: number): string {
+  return `${narrative} Next: get firm offers from approved suppliers, or hold off if you can accept ${expectedRunwayDays.toFixed(0)} days of cover.`;
+}
