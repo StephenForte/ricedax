@@ -1,6 +1,6 @@
 lot_id,book,origin,grade,sku,tonnes,unit_cost_usd,warehouse,as_of
-lot_c_vnm_1,commercial,Vietnam,5% broken,VNM-5BRK,820,612,Jurong,2026-08-15
-lot_c_tha_1,commercial,Thailand,Hom Mali,THA-HM,310,651,Jurong,2026-08-15
-lot_c_pak_1,commercial,Pakistan,Basmati,PAK-BAS,256,548,Pasir Panjang,2026-08-15
-lot_s_vnm_1,stockpile,Vietnam,5% broken,VNM-5BRK,1400,598,SFA-bonded,2026-08-15
-lot_s_tha_1,stockpile,Thailand,Hom Mali,THA-HM,740,640,SFA-bonded,2026-08-15
+lot_c_vnm_1,commercial,Vietnam,Fragrant 5% Broken,VNM-5BRK,820,612,Jurong,2026-08-15
+lot_c_tha_1,commercial,Thailand,Hom Mali 100% Grade B,THA-HM,310,651,Jurong,2026-08-15
+lot_c_pak_1,commercial,Pakistan,1121 Steam Basmati 2%,PAK-BAS,256,548,Pasir Panjang,2026-08-15
+lot_s_vnm_1,stockpile,Vietnam,Fragrant 5% Broken,VNM-5BRK,1400,598,MSR warehouse,2026-08-15
+lot_s_tha_1,stockpile,Thailand,Hom Mali 100% Grade B,THA-HM,740,640,MSR warehouse,2026-08-15

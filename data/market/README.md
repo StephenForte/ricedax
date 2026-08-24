@@ -1,6 +1,6 @@
-# RiceDAX Network — common market pack
+# RiceDAX Network — market pack
 
-These series are **common** (public or clearly synthetic). They are the only numbers allowed on the Network pane.
+These series are **market** data (public or clearly synthetic). They are the only numbers allowed on the Market pane.
 
 | seriesKey | source | dataClass |
 | --- | --- | --- |

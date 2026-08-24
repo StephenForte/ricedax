@@ -5,6 +5,6 @@
   "heldTonnes": 2140,
   "bufferTonnes": 140,
   "status": "within_requirement",
-  "sfaRuleNote": "Synthetic stand-in for SFA dual-inventory: maintain a dedicated emergency stockpile separate from commercial working stock. Figures are fictional.",
+  "sfaRuleNote": "Synthetic stand-in for MSR: maintain dedicated MSR stock separate from commercial stock. Figures are fictional.",
   "dataClass": "private"
 }

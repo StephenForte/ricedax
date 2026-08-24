@@ -176,10 +176,10 @@ async function wipe() {
 
 function scorecard() {
   return [
-    { id: "sc_landed", dimension: "Procurement", label: "Landed-cost vs last-paid", baseline: "+2.4%", ricedax: "−1.1%", unit: "vs last paid", note: "Placeholder. Compare against a pre-agreed policy, not every market tick." },
-    { id: "sc_doi", dimension: "Inventory", label: "Average days of commercial inventory", baseline: "71 days", ricedax: "63 days", unit: "days", note: "Seeded from the synthetic trader pack." },
-    { id: "sc_wc", dimension: "Working capital", label: "Capital tied in excess inventory", baseline: "S$410k", ricedax: "S$286k", unit: "SGD", note: "Illustrative. Excess defined vs 85-day target." },
-    { id: "sc_stockout", dimension: "Availability", label: "Emergency-buy frequency", baseline: "3 / year", ricedax: "1 / year", unit: "events", note: "Placeholder until a live baseline is agreed with the trader." },
+    { id: "sc_landed", dimension: "Procurement", label: "Est. CFR vs last paid", baseline: "+2.4%", ricedax: "−1.1%", unit: "vs last paid", note: "Placeholder. Compare against a pre-agreed policy, not every market tick." },
+    { id: "sc_doi", dimension: "Stock & cover", label: "Average commercial cover", baseline: "71 days", ricedax: "63 days", unit: "days", note: "Seeded from the synthetic trader pack." },
+    { id: "sc_wc", dimension: "Working capital", label: "Capital tied up in excess stock", baseline: "S$410k", ricedax: "S$286k", unit: "SGD", note: "Illustrative. Excess defined vs 85-day target cover." },
+    { id: "sc_stockout", dimension: "Availability", label: "Emergency cover events", baseline: "3 / year", ricedax: "1 / year", unit: "events", note: "Placeholder until a live baseline is agreed with the trader." },
     { id: "sc_mape", dimension: "Forecasting", label: "Demand forecast error", baseline: "18%", ricedax: "11%", unit: "MAPE", note: "Placeholder. v0 uses trailing velocity, not a trained model." },
     { id: "sc_hours", dimension: "Operations", label: "Hours gathering market information", baseline: "6 h / week", ricedax: "1.5 h / week", unit: "hours", note: "To be diary-studied in the October prototype." },
     { id: "sc_tpo", dimension: "Workflow", label: "Time from requirement to approved PO", baseline: "9 days", ricedax: "4 days", unit: "days", note: "RFQ path is the measurement surface." },

@@ -1,3 +1,3 @@
 po_id,supplier_id,sku,origin,grade,tonnes,status,landed_usd_per_t,ordered_on,eta
-po_8841,sup_mekong,VNM-5BRK,Vietnam,5% broken,300,in_transit,611,2026-07-28,2026-08-29
-po_8842,sup_bangkok,THA-HM,Thailand,Hom Mali,120,confirmed,646,2026-08-04,2026-09-12
+po_8841,sup_mekong,VNM-5BRK,Vietnam,Fragrant 5% Broken,300,in_transit,611,2026-07-28,2026-08-29
+po_8842,sup_bangkok,THA-HM,Thailand,Hom Mali 100% Grade B,120,confirmed,646,2026-08-04,2026-09-12

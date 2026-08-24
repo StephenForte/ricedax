@@ -1,25 +1,25 @@
 import { ActionPill } from "@/components/Format";
 import { ApproveButton, CreateRfqButton } from "@/components/WorkflowButtons";
+import { coverHeadline, dataClassLabel, substitutionNote, workflowStatusLabel } from "@/lib/language";
 import { getRecommendation } from "@/lib/queries";
 
 export const dynamic = "force-dynamic";
 
-export default async function RecommendationPage() {
+export default async function CoverPage() {
   const { rec, output } = await getRecommendation();
 
   return (
     <div className="space-y-6">
       <header>
-        <p className="text-[11px] uppercase tracking-[0.2em] text-[var(--gold)]">Explainable decision</p>
+        <p className="text-[11px] uppercase tracking-[0.2em] text-[var(--gold)]">Cover recommendation</p>
         <div className="mt-2 flex flex-wrap items-center gap-3">
           <ActionPill action={output.action} />
-          <h2 className="serif text-3xl">
-            {output.action} {output.tonnes}t {output.origin} {output.grade}
-          </h2>
+          <h2 className="serif text-3xl">{coverHeadline(output.action, output.tonnes, output.origin, output.grade)}</h2>
         </div>
         <p className="mt-2 text-[var(--ink-soft)]">
-          {output.windowDaysLow}–{output.windowDaysHigh} day window · {output.confidence}% confidence · status {rec.status}
+          Cover within {output.windowDaysLow}–{output.windowDaysHigh} days · {output.confidence}% confidence · {workflowStatusLabel(rec.status)}
         </p>
+        <p className="mt-2 max-w-2xl text-sm text-[var(--ink-soft)]">{substitutionNote(`${output.origin} ${output.grade}`)}</p>
       </header>
 
       <div className="grid gap-4 md:grid-cols-2">
@@ -35,8 +35,8 @@ export default async function RecommendationPage() {
           <h3 className="serif text-xl">What happens if I wait</h3>
           <p className="mt-3 text-sm leading-relaxed">{output.counterfactual.narrative}</p>
           <p className="mt-3 text-sm text-[var(--ink-soft)]">
-            Runway in 14 days: {output.counterfactual.expectedRunwayDays} · expected landed US$
-            {output.counterfactual.expectedCostUsdPerT}/t
+            Cover in 14 days: {output.counterfactual.expectedRunwayDays} days · expected landed US$
+            {output.counterfactual.expectedCostUsdPerT.toFixed(0)}/MT
           </p>
         </section>
       </div>
@@ -56,7 +56,7 @@ export default async function RecommendationPage() {
               <tr key={e.label} className="border-t border-[var(--rule)]">
                 <td className="py-2">{e.label}</td>
                 <td>{e.value}</td>
-                <td className="uppercase tracking-wider text-[11px] text-[var(--gold)]">{e.dataClass}</td>
+                <td className="uppercase tracking-wider text-[11px] text-[var(--gold)]">{dataClassLabel(e.dataClass)}</td>
               </tr>
             ))}
           </tbody>
@@ -70,7 +70,7 @@ export default async function RecommendationPage() {
             <li key={s.assumption}>
               <p className="font-medium">{s.assumption}</p>
               <p className="text-[var(--ink-soft)]">
-                Flips to {s.flipTo}
+                Flips to {s.flipTo === "BUY" ? "COVER" : s.flipTo}
                 {s.flipOrigin ? ` ${s.flipOrigin}` : ""}. {s.detail}
               </p>
             </li>

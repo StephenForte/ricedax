@@ -6,17 +6,17 @@ import { askCopilotAction } from "@/lib/copilot-action";
 import type { RecommendationOutput } from "@/lib/engine";
 
 const PRESETS = [
-  "Why are you recommending Vietnam instead of Thailand?",
-  "Assume SGD weakens another 3%. What changes?",
-  "What is our projected inventory on 15 November?",
-  "Draft an RFQ for the approved purchase.",
+  "Why Vietnam over Thailand?",
+  "If SGD weakens 3%, what happens to landed?",
+  "What will our cover be on 15 November?",
+  "What's on the water?",
+  "Get me an RFQ for 480 MT Vietnam Fragrant 5% Broken, Sep/Oct shipment.",
 ];
 
 export function CopilotForm() {
   const [question, setQuestion] = useState(PRESETS[0]);
   const [answer, setAnswer] = useState<string | null>(null);
   const [output, setOutput] = useState<RecommendationOutput | null>(null);
-  const [tools, setTools] = useState<string[]>([]);
   const [pending, start] = useTransition();
 
   return (
@@ -36,7 +36,6 @@ export function CopilotForm() {
             const result = await askCopilotAction(question);
             setAnswer(result.answer);
             setOutput(result.output ?? null);
-            setTools(result.tools.map((t) => t.name));
           });
         }}
       >
@@ -47,7 +46,7 @@ export function CopilotForm() {
           onChange={(e) => setQuestion(e.target.value)}
         />
         <button className="btn mt-3" disabled={pending}>
-          {pending ? "Thinking…" : "Ask"}
+          {pending ? "Checking…" : "Ask"}
         </button>
       </form>
       {answer ? (
@@ -61,9 +60,6 @@ export function CopilotForm() {
             </div>
           ) : null}
           <p className="text-sm leading-relaxed">{answer}</p>
-          {tools.length ? (
-            <p className="mt-3 text-[11px] uppercase tracking-wider text-[var(--ink-soft)]">Tools: {tools.join(", ")}</p>
-          ) : null}
         </section>
       ) : null}
     </div>

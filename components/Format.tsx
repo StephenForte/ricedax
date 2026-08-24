@@ -1,3 +1,5 @@
+import { actionLabel } from "@/lib/language";
+
 export function moneyUsd(n: number): string {
   return `US$${n.toLocaleString("en-SG", { maximumFractionDigits: 0 })}`;
 }
@@ -18,7 +20,7 @@ export function ActionPill({ action }: { action: string }) {
       className="inline-block px-2 py-0.5 text-[11px] font-medium uppercase tracking-widest text-white"
       style={{ background: color }}
     >
-      {action}
+      {actionLabel(action)}
     </span>
   );
 }

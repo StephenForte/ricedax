@@ -7,7 +7,7 @@ export function ApproveButton({ disabled }: { disabled: boolean }) {
   const [pending, start] = useTransition();
   return (
     <button className="btn" disabled={disabled || pending} onClick={() => start(() => approveRecommendation())}>
-      {pending ? "Approving…" : "Approve recommendation"}
+      {pending ? "Approving…" : "Approve cover"}
     </button>
   );
 }
@@ -16,7 +16,7 @@ export function CreateRfqButton({ disabled }: { disabled: boolean }) {
   const [pending, start] = useTransition();
   return (
     <button className="btn" disabled={disabled || pending} onClick={() => start(() => createRfq())}>
-      {pending ? "Drafting…" : "Create RFQ"}
+      {pending ? "Getting offers…" : "Get offers"}
     </button>
   );
 }

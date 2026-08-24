@@ -5,9 +5,9 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
   return (
     <div className="mx-auto flex min-h-screen max-w-md flex-col justify-center px-5">
       <p className="text-[11px] uppercase tracking-[0.22em] text-[var(--gold)]">RiceDAX</p>
-      <h1 className="serif mt-2 text-4xl">Pacific Grain node</h1>
+      <h1 className="serif mt-2 text-4xl">Pacific Grain workspace</h1>
       <p className="mt-3 text-sm text-[var(--ink-soft)]">
-        Synthetic demo for the EnterpriseSG walkthrough. Not live prices. Not a production system.
+        Demo only. Synthetic trader data. Market data labelled by source.
       </p>
       <form action={loginAction} className="panel mt-6 p-5">
         <input type="hidden" name="next" value={q.next || "/"} />
