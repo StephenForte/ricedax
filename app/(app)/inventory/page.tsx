@@ -1,5 +1,5 @@
 import { moneySgd, moneyUsd } from "@/components/Format";
-import { BASE_INPUTS } from "@/lib/engine";
+import { BASE_INPUTS, openRequirementMt } from "@/lib/engine";
 import { formatMt, poStatusLabel } from "@/lib/language";
 import { getInventory } from "@/lib/queries";
 
@@ -11,7 +11,13 @@ export default async function StockCoverPage() {
   const msrLots = data.lots.filter((l) => l.book === "stockpile");
   const onWater = data.pos.filter((p) => p.status === "in_transit").reduce((s, p) => s + p.tonnes, 0);
   const booked = data.pos.filter((p) => p.status === "confirmed").reduce((s, p) => s + p.tonnes, 0);
-  const openReq = Math.max(0, Math.round((BASE_INPUTS.targetCoverDays - data.runway) * BASE_INPUTS.dailyDemandT));
+  const openReq = openRequirementMt({
+    targetCoverDays: BASE_INPUTS.targetCoverDays,
+    dailyDemandT: BASE_INPUTS.dailyDemandT,
+    onHandMt: data.commercialTonnes,
+    onWaterMt: onWater,
+    bookedMt: booked,
+  });
 
   return (
     <div className="space-y-6">
@@ -26,7 +32,7 @@ export default async function StockCoverPage() {
         <Stat label="On hand" value={formatMt(data.commercialTonnes)} detail={`${data.runway.toFixed(0)} days cover`} />
         <Stat label="On the water" value={formatMt(onWater)} detail="Purchased, not yet in warehouse" />
         <Stat label="Booked" value={formatMt(booked)} detail="Contracted, not yet shipped" />
-        <Stat label="Open requirement" value={formatMt(openReq)} detail="To reach 85-day target cover" />
+        <Stat label="Open requirement" value={formatMt(openReq)} detail="After on-hand, on the water, and booked" />
       </div>
       <div className="grid gap-4 md:grid-cols-3">
         <Stat label="Commercial cover" value={`${data.runway.toFixed(0)} days cover`} detail={`${formatMt(data.commercialTonnes)} on hand`} />

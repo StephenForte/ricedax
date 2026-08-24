@@ -39,7 +39,8 @@ export default async function RfqPage() {
             <h3 className="serif text-xl">{rfq.status === "COMPARED" || rfq.status === "QUOTES_IN" ? "RFQ sent" : "RFQ draft"}</h3>
             <p className="mt-2 text-sm text-[var(--ink-soft)]">
               {formatMt(Number(payload?.tonnes ?? rec.tonnes))} {payload?.originPreferred ?? rec.origin} {payload?.grade ?? rec.grade} ·{" "}
-              {payload?.incoterm ?? "CFR Singapore"} · Shipment {payload?.shipment ?? SHIPMENT_PERIOD}
+              {payload?.incoterm ?? "CFR Singapore"} · Cover within {payload?.window ?? `${rec.windowDaysLow}–${rec.windowDaysHigh} days`} ·
+              Shipment {payload?.shipment ?? SHIPMENT_PERIOD}
             </p>
             <pre className="mt-3 overflow-x-auto text-xs leading-relaxed text-[var(--ink-soft)]">
               {JSON.stringify(payload, null, 2)}

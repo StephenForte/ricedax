@@ -1,4 +1,5 @@
 import { appendAudit } from "./audit";
+import { matchCopilotIntent } from "./copilot-intent";
 import { prisma } from "./db";
 import { applyShocks, BASE_INPUTS, recommend, type RecommendationOutput } from "./engine";
 import { actionLabel, formatMt, SHIPMENT_PERIOD } from "./language";
@@ -15,7 +16,9 @@ export type CopilotResult = {
 const DAILY_CAP = Number(process.env.COPILOT_DAILY_CAP || 80);
 
 export async function askCopilot(question: string): Promise<CopilotResult> {
-  if (looksLikeCompetitorProbe(question)) {
+  const intent = matchCopilotIntent(question);
+
+  if (intent === "competitor") {
     const refused = "I only see Pacific Grain's private books and the RiceDAX market layer. I cannot see another trader's stock, prices, or intentions.";
     await logTurn(question, refused, []);
     return { answer: refused, tools: [] };
@@ -32,7 +35,7 @@ export async function askCopilot(question: string): Promise<CopilotResult> {
   const tools: CopilotResult["tools"] = [];
   const q = question.toLowerCase();
 
-  if ((/why/.test(q) && /vietnam/.test(q)) || (/vietnam/.test(q) && /thai/.test(q))) {
+  if (intent === "why-vietnam") {
     tools.push({ name: "getRecommendation" });
     const { output } = await getRecommendation();
     const answer = whyVietnam(output);
@@ -40,7 +43,7 @@ export async function askCopilot(question: string): Promise<CopilotResult> {
     return { answer, tools, output };
   }
 
-  if (/sgd|weaken|fx|dollar|3%|landed/.test(q) && /sgd|weaken|fx|3%/.test(q)) {
+  if (intent === "fx") {
     const pct = extractPct(q) ?? 3;
     tools.push({ name: "runScenario", args: { fxShockPct: pct } });
     const output = recommend(applyShocks(BASE_INPUTS, { fxShockPct: pct }));
@@ -49,7 +52,7 @@ export async function askCopilot(question: string): Promise<CopilotResult> {
     return { answer, tools, output };
   }
 
-  if (/freight/.test(q)) {
+  if (intent === "freight") {
     tools.push({ name: "runScenario", args: { freightVnmShockUsd: 40 } });
     const output = recommend(applyShocks(BASE_INPUTS, { freightVnmShockUsd: 40 }));
     const answer = `If Vietnam–Singapore freight rises US$40/MT, ${output.origin} ${output.grade} becomes cheaper on estimated CFR Singapore and the call is ${actionLabel(output.action)} ${formatMt(output.tonnes)}.`;
@@ -57,7 +60,7 @@ export async function askCopilot(question: string): Promise<CopilotResult> {
     return { answer, tools, output };
   }
 
-  if (/on the water|in transit|arrival|open po|running late/.test(q)) {
+  if (intent === "on-water") {
     tools.push({ name: "getInventory" });
     const inv = await getInventory();
     const water = inv.pos.filter((p) => p.status === "in_transit");
@@ -72,7 +75,15 @@ export async function askCopilot(question: string): Promise<CopilotResult> {
     return { answer, tools };
   }
 
-  if (/inventory|15 november|november|runway|stockpile|cover|on hand|msr/.test(q)) {
+  if (intent === "rfq") {
+    tools.push({ name: "draftRfq" });
+    const { output } = await getRecommendation();
+    const answer = `RFQ draft: ${formatMt(output.tonnes)} ${output.origin} ${output.grade}, CFR Singapore. Cover within ${output.windowDaysLow}–${output.windowDaysHigh} days. Shipment ${SHIPMENT_PERIOD}. Use Get offers on the cover to move that into the workflow. Buyer and supplier remain counterparties.`;
+    await logTurn(question, answer, tools);
+    return { answer, tools, output };
+  }
+
+  if (intent === "inventory") {
     tools.push({ name: "getInventory" });
     const inv = await getInventory();
     const novCover = Math.max(0, inv.commercialTonnes - 22 * 85);
@@ -82,14 +93,6 @@ export async function askCopilot(question: string): Promise<CopilotResult> {
         : `You're covered for about ${inv.runway.toFixed(0)} days at current sales (${formatMt(inv.commercialTonnes)} on hand). Without a new booking, cover falls below 4 weeks in October and is gone by mid-November. MSR stock is ${formatMt(inv.stockpile.heldTonnes)} held / ${formatMt(inv.stockpile.requiredTonnes)} required, so this is commercial cover, not an MSR top-up.`;
     await logTurn(question, answer, tools);
     return { answer, tools };
-  }
-
-  if (/rfq|draft|get offers|get me an rfq/.test(q)) {
-    tools.push({ name: "draftRfq" });
-    const { output } = await getRecommendation();
-    const answer = `RFQ draft: ${formatMt(output.tonnes)} ${output.origin} ${output.grade}, CFR Singapore, shipment ${SHIPMENT_PERIOD}. Use Get offers on the cover to move that into the workflow. Buyer and supplier remain counterparties.`;
-    await logTurn(question, answer, tools);
-    return { answer, tools, output };
   }
 
   tools.push({ name: "getRecommendation" });
@@ -113,10 +116,6 @@ function whyVietnam(output: RecommendationOutput): string {
 
 function deterministicFallback(question: string, output: RecommendationOutput): string {
   return `Current call: ${actionLabel(output.action)} ${formatMt(output.tonnes)} ${output.origin} ${output.grade}. Cover within ${output.windowDaysLow}–${output.windowDaysHigh} days (${output.confidence}% confidence). ${output.rationale[0]} Ask “Why Vietnam over Thailand?” or “If SGD weakens 3%, what happens to landed?” (${question.slice(0, 40)})`;
-}
-
-function looksLikeCompetitorProbe(q: string): boolean {
-  return /competitor|other trader|who is buying| palay|rival/i.test(q);
 }
 
 function extractPct(q: string): number | null {

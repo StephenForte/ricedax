@@ -56,7 +56,7 @@ export async function createRfq() {
     originPreferred: rec.origin,
     grade: rec.grade,
     tonnes: rec.tonnes,
-    window: SHIPMENT_PERIOD,
+    window: `${rec.windowDaysLow}–${rec.windowDaysHigh} days`,
     shipment: SHIPMENT_PERIOD,
     incoterm: "CFR Singapore",
     notes: "Synthetic RFQ for the RiceDAX walkthrough. Not a live enquiry.",

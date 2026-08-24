@@ -25,6 +25,19 @@ export function landedUsd(fob: number, freight: number): number {
   return round2(fob + freight);
 }
 
+/** Tonnes still to cover after on-hand, on-the-water, and booked volume. */
+export function openRequirementMt(args: {
+  targetCoverDays: number;
+  dailyDemandT: number;
+  onHandMt: number;
+  onWaterMt: number;
+  bookedMt: number;
+}): number {
+  const target = args.targetCoverDays * args.dailyDemandT;
+  const covered = args.onHandMt + args.onWaterMt + args.bookedMt;
+  return Math.max(0, Math.round(target - covered));
+}
+
 export function applyShocks(base: EngineInputs, shocks?: Partial<Pick<EngineInputs, "fxShockPct" | "freightVnmShockUsd" | "freightBkkShockUsd" | "delayDays">>): EngineInputs {
   return { ...base, ...shocks };
 }

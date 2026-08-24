@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { BASE_INPUTS, applyShocks, recommend } from "./recommend";
+import { BASE_INPUTS, applyShocks, recommend, openRequirementMt } from "./recommend";
 
 describe("recommend", () => {
   it("covers Vietnam Fragrant 5% Broken in the base Pacific Grain case", () => {
@@ -34,5 +34,19 @@ describe("recommend", () => {
     expect(out.counterfactual.waitDays).toBe(14);
     expect(out.counterfactual.expectedRunwayDays).toBeLessThan(63);
     expect(out.counterfactual.narrative).toMatch(/Waiting leaves 49 days of cover/i);
+  });
+
+  it("nets on-the-water and booked tonnes out of open requirement", () => {
+    const fromOnHandOnly = Math.round((85 - 1386 / 22) * 22);
+    expect(fromOnHandOnly).toBe(484);
+    expect(
+      openRequirementMt({
+        targetCoverDays: 85,
+        dailyDemandT: 22,
+        onHandMt: 1386,
+        onWaterMt: 300,
+        bookedMt: 120,
+      }),
+    ).toBe(64);
   });
 });
