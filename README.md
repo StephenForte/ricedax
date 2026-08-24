@@ -22,6 +22,14 @@ Demo passphrase defaults to `pacific`.
 
 `npm start` seeds SQLite and binds `0.0.0.0:$PORT` (Render).
 
+On-prem packaging (same image as trader private cloud / trader public cloud):
+
+```bash
+docker compose up --build
+```
+
+`GET /health` reports which home served the request (`on-premises` on localhost). Export payloads live on `/ingest`. Audit receipt lives on `/scorecard`.
+
 ## What is real vs fake
 
 See [docs/LEARNING.md](docs/LEARNING.md). Rice prices and freight are synthetic. USD/SGD can be live via Frankfurter. The engine is rules, not a trained model.
@@ -29,6 +37,7 @@ See [docs/LEARNING.md](docs/LEARNING.md). Rice prices and freight are synthetic.
 ## Docs
 
 - [docs/rice-trader-language.md](docs/rice-trader-language.md) — trader language and ontology
+- [docs/application-suggestions.md](docs/application-suggestions.md) — FormSG / Google Doc mapping
 - [docs/demo-script.md](docs/demo-script.md) — three-minute walkthrough
 - [docs/eoi-proposal.md](docs/eoi-proposal.md) — FormSG draft (team and dollars still open)
 - [docs/LEARNING.md](docs/LEARNING.md) — easy / hard / fake, plus post-EOI spikes

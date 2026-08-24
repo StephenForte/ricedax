@@ -1,5 +1,5 @@
 import { appendAudit } from "./audit";
-import { matchCopilotIntent } from "./copilot-intent";
+import { followUpsFor, matchCopilotIntent } from "./copilot-intent";
 import { prisma } from "./db";
 import { applyShocks, BASE_INPUTS, recommend, type RecommendationOutput } from "./engine";
 import { actionLabel, formatMt, SHIPMENT_PERIOD } from "./language";
@@ -11,6 +11,7 @@ export type CopilotResult = {
   answer: string;
   tools: { name: CopilotToolName; args?: Record<string, number> }[];
   output?: RecommendationOutput;
+  followUps: string[];
 };
 
 const DAILY_CAP = Number(process.env.COPILOT_DAILY_CAP || 80);
@@ -21,7 +22,7 @@ export async function askCopilot(question: string): Promise<CopilotResult> {
   if (intent === "competitor") {
     const refused = "I only see Pacific Grain's private books and the RiceDAX market layer. I cannot see another trader's stock, prices, or intentions.";
     await logTurn(question, refused, []);
-    return { answer: refused, tools: [] };
+    return { answer: refused, tools: [], followUps: [] };
   }
 
   const used = await prisma.copilotTurn.count({
@@ -29,7 +30,7 @@ export async function askCopilot(question: string): Promise<CopilotResult> {
   });
   if (used >= DAILY_CAP) {
     const answer = "Daily Ask RiceDAX cap reached. Reset the demo or try again tomorrow.";
-    return { answer, tools: [] };
+    return { answer, tools: [], followUps: [] };
   }
 
   const tools: CopilotResult["tools"] = [];
@@ -40,7 +41,15 @@ export async function askCopilot(question: string): Promise<CopilotResult> {
     const { output } = await getRecommendation();
     const answer = whyVietnam(output);
     await logTurn(question, answer, tools);
-    return { answer, tools, output };
+    return pack(intent, answer, tools, output);
+  }
+
+  if (intent === "wait") {
+    tools.push({ name: "getRecommendation" });
+    const { output } = await getRecommendation();
+    const answer = `${output.counterfactual.narrative} Next: get firm offers from approved suppliers, or hold off if you can accept 49 days of cover.`;
+    await logTurn(question, answer, tools);
+    return pack(intent, answer, tools, output);
   }
 
   if (intent === "fx") {
@@ -49,7 +58,7 @@ export async function askCopilot(question: string): Promise<CopilotResult> {
     const output = recommend(applyShocks(BASE_INPUTS, { fxShockPct: pct }));
     const answer = `If SGD weakens ${pct}%, landed in SGD moves through last paid, so the call flips from COVER Vietnam to ${actionLabel(output.action)}${output.origin !== "Vietnam" ? ` ${output.origin}` : ""}. We would not stretch working capital to pre-empt cover. Confidence ${output.confidence}%.`;
     await logTurn(question, answer, tools);
-    return { answer, tools, output };
+    return pack(intent, answer, tools, output);
   }
 
   if (intent === "freight") {
@@ -57,7 +66,7 @@ export async function askCopilot(question: string): Promise<CopilotResult> {
     const output = recommend(applyShocks(BASE_INPUTS, { freightVnmShockUsd: 40 }));
     const answer = `If Vietnam–Singapore freight rises US$40/MT, ${output.origin} ${output.grade} becomes cheaper on estimated CFR Singapore and the call is ${actionLabel(output.action)} ${formatMt(output.tonnes)}.`;
     await logTurn(question, answer, tools);
-    return { answer, tools, output };
+    return pack(intent, answer, tools, output);
   }
 
   if (intent === "on-water") {
@@ -72,7 +81,7 @@ export async function askCopilot(question: string): Promise<CopilotResult> {
       ? `${formatMt(waterMt)} is on the water (${water.map((p) => `${p.origin} ${formatMt(p.tonnes)}, ETA ${p.eta}`).join("; ")}). ${formatMt(bookedMt)} is booked, not yet shipped. ${late.length} open PO is past ETA.`
       : `${formatMt(waterMt)} is on the water (${water.map((p) => `${p.origin} ${formatMt(p.tonnes)}, ETA ${p.eta}`).join("; ")}). ${formatMt(bookedMt)} is booked, not yet shipped. No open POs are running late against today's date.`;
     await logTurn(question, answer, tools);
-    return { answer, tools };
+    return pack(intent, answer, tools);
   }
 
   if (intent === "rfq") {
@@ -80,7 +89,7 @@ export async function askCopilot(question: string): Promise<CopilotResult> {
     const { output } = await getRecommendation();
     const answer = `RFQ draft: ${formatMt(output.tonnes)} ${output.origin} ${output.grade}, CFR Singapore. Cover within ${output.windowDaysLow}–${output.windowDaysHigh} days. Shipment ${SHIPMENT_PERIOD}. Use Get offers on the cover to move that into the workflow. Buyer and supplier remain counterparties.`;
     await logTurn(question, answer, tools);
-    return { answer, tools, output };
+    return pack(intent, answer, tools, output);
   }
 
   if (intent === "inventory") {
@@ -92,14 +101,23 @@ export async function askCopilot(question: string): Promise<CopilotResult> {
         ? `Commercial stock is ${formatMt(inv.commercialTonnes)} — about ${inv.runway.toFixed(0)} days cover vs an 85-day target. MSR stock is ${formatMt(inv.stockpile.heldTonnes)} held / ${formatMt(inv.stockpile.requiredTonnes)} required (${inv.stockpile.status === "within_requirement" ? "MSR compliant" : "short"}). Cover on 15 November, at 22 MT/day and no new receipts, is about ${formatMt(novCover)}. That is a velocity projection, not a forecast.`
         : `You're covered for about ${inv.runway.toFixed(0)} days at current sales (${formatMt(inv.commercialTonnes)} on hand). Without a new booking, cover falls below 4 weeks in October and is gone by mid-November. MSR stock is ${formatMt(inv.stockpile.heldTonnes)} held / ${formatMt(inv.stockpile.requiredTonnes)} required, so this is commercial cover, not an MSR top-up.`;
     await logTurn(question, answer, tools);
-    return { answer, tools };
+    return pack(intent, answer, tools);
   }
 
   tools.push({ name: "getRecommendation" });
   const { output } = await getRecommendation();
   const answer = deterministicFallback(question, output);
   await logTurn(question, answer, tools);
-  return { answer, tools, output };
+  return pack(intent, answer, tools, output);
+}
+
+function pack(
+  intent: Parameters<typeof followUpsFor>[0],
+  answer: string,
+  tools: CopilotResult["tools"],
+  output?: RecommendationOutput,
+): CopilotResult {
+  return { answer, tools, output, followUps: followUpsFor(intent) };
 }
 
 function whyVietnam(output: RecommendationOutput): string {

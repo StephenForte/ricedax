@@ -12,4 +12,6 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 Trader-facing copy, copilot answers, and walkthrough language follow **[docs/rice-trader-language.md](docs/rice-trader-language.md)**. The same standard is in `.cursor/rules/rice-trader-language.mdc`.
 
+Evaluator / FormSG mapping: [docs/application-suggestions.md](docs/application-suggestions.md). Demo runbook: [docs/demo-script.md](docs/demo-script.md).
+
 The primary UI is 100% rice-trader language. Engineering, L2, and evaluator wording stay one level down (Data, Audit trail, proposals). Do not mix Vietnam white 5% broken, Vietnam fragrant, Thai Hom Mali, and Basmati as if they were interchangeable.

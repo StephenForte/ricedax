@@ -44,6 +44,8 @@ Conversational shorthand such as “Vietnam 5%” is valid **after** the fragran
 
 **Overview | Stock & Cover | Cover | Market | RFQ | Ask RiceDAX | Value | Data**
 
+Ask RiceDAX may show a **Chatbot** eyebrow because the EOI names chatbot as the anchor application. The conversation itself stays trader language.
+
 Internal routes may stay the same. Labels facing the trader must not say Cockpit, Inventory, Recommendation, Network, Copilot, Scorecard, or Ingest.
 
 | Avoid as primary wording | Prefer |

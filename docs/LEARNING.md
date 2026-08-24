@@ -5,11 +5,11 @@ Written as we built, so October is not a second guess.
 ## Easy
 
 - Overview + stock & cover + cover screens over structured fixtures.
-- Ask RiceDAX that calls the same engine (`getInventory`, `getRecommendation`, `runScenario`, `draftRfq`).
+- Ask RiceDAX that calls the same engine, now as a **multi-turn chatbot thread**.
+- CSV ingest of a *clean* trader drop (stock, sales, POs, suppliers) and export payloads for Excel / ERP / CRM / email.
 - RFQ JSON + two canned quotes + landed-cost compare.
 - Private vs network visual that does not need an L2 to be understood.
-- Hash-chained local audit with an HMAC checkpoint. Tip commitment is 32 bytes and contains no rice data.
-- CSV ingest of a *clean* trader drop (inventory, sales, POs, suppliers).
+- Local audit with an integrity receipt (32-byte tip). Rice data is not posted.
 
 ## Hard (still hard)
 
@@ -34,12 +34,13 @@ Written as we built, so October is not a second guess.
 | USD/SGD | Can be live (Frankfurter / ECB). Falls back to 1.35 |
 | SFA / MSR rule | Synthetic stand-in, not the circular |
 | Scorecard "savings" | Placeholders vs a made-up baseline |
-| Ask RiceDAX | Deterministic tools + templated prose. Optional LLM key unused in v0 |
+| Ask RiceDAX | Deterministic tools + templated prose in a seeded chat thread. Optional LLM key unused in v0 |
 | Quotes from Mekong / Chao Phraya | Canned |
+| ForteL2 receipt | Demo-simulated tx of the 32-byte tip. Not a live RPC post unless FORTEL2_RPC is set |
 
 ## Post-30-August spikes
 
 1. **Excel mess** — `/ingest` already reads the CSV drop. Next: feed it a real (redacted) workbook and count breakage.
 2. **Public feeds** — USD/SGD is live on `/network`. Still missing licensed rice and freight. See `lib/feeds.ts`.
-3. **ForteL2 audit anchor** — `lib/fortel2-anchor.ts` hashes the local tip. Post that hash to chain 852 when the RPC is up. Do not post inventory.
+3. **ForteL2 audit anchor** — exhibit now shows a labelled demo receipt of the local tip on chain 852. Live RPC is still the October gap. Do not post inventory.
 4. Do not build a rice ERC-20 until a trader has a title/warehouse problem.

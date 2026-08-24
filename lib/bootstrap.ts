@@ -151,6 +151,19 @@ export async function seedDemo() {
     detail: { action: output.action, origin: output.origin, tonnes: output.tonnes },
   });
 
+  const { askCopilot } = await import("./copilot");
+  for (const q of [
+    "Why Vietnam over Thailand?",
+    "Can I hold off two weeks?",
+    "What's on the water?",
+  ]) {
+    await askCopilot(q);
+  }
+
+  const tip = (await prisma.auditEvent.findFirst({ orderBy: { id: "desc" } }))?.hash ?? null;
+  const { recordDemoL2Anchor } = await import("./fortel2-store");
+  await recordDemoL2Anchor(tip);
+
   return { recommendation: output, ingest: drop.reports };
 }
 

@@ -1,7 +1,7 @@
-import { getAuditPreview } from "@/lib/queries";
-import { getScorecard } from "@/lib/queries";
-import { tipCommitment } from "@/lib/audit";
-import { verifyAuditChain } from "@/lib/audit";
+import { FORTEL2_CHAIN_ID } from "@/lib/fortel2-anchor";
+import { getL2Anchor } from "@/lib/fortel2-store";
+import { getAuditPreview, getScorecard } from "@/lib/queries";
+import { tipCommitment, verifyAuditChain } from "@/lib/audit";
 
 export const dynamic = "force-dynamic";
 
@@ -10,6 +10,7 @@ export default async function ValuePage() {
   const audit = await getAuditPreview();
   const verified = await verifyAuditChain();
   const commitment = tipCommitment(audit.tip);
+  const l2 = await getL2Anchor();
 
   return (
     <div className="space-y-6">
@@ -47,14 +48,25 @@ export default async function ValuePage() {
       <section className="panel p-5">
         <h3 className="serif text-xl">Audit trail</h3>
         <p className="mt-2 text-sm text-[var(--ink-soft)]">
-          {verified.checked} verified events
-          {verified.ok ? "" : " — integrity check failed"}.
+          {verified.ok
+            ? `${verified.checked} verified events. Private trader data stays in this workspace.`
+            : `Integrity check failed at event ${verified.checked}. Private trader data stays in this workspace.`}
         </p>
+        {l2?.l2TxHash ? (
+          <div className="mt-3 border border-[var(--rule)] p-3 text-sm">
+            <p className="text-[11px] uppercase tracking-wider text-[var(--gold)]">Integrity receipt</p>
+            <p className="mt-1">
+              Posted to ForteL2 (chain {l2.l2ChainId ?? FORTEL2_CHAIN_ID})
+              {l2.l2Status === "demo-simulated" ? " · demo receipt" : ""}.
+            </p>
+            <p className="mt-1 break-all font-mono text-[11px] text-[var(--ink-soft)]">{l2.l2TxHash}</p>
+          </div>
+        ) : null}
         <details className="mt-3 text-sm text-[var(--ink-soft)]">
           <summary className="cursor-pointer text-[11px] uppercase tracking-wider text-[var(--gold)]">Technical disclosure</summary>
           <p className="mt-2">
-            Events are recorded locally so the trail can be checked without exposing private trader data. Hash and
-            anchoring details stay here, not on the trading screens.
+            Events are recorded locally. Only a 32-byte commitment is represented on ForteL2 — not stock, prices, or
+            identities. October can replace the demo receipt with a live RPC post without changing the trading screens.
           </p>
           {commitment ? (
             <p className="mt-2 break-all font-mono text-[11px]">Integrity checkpoint {commitment}</p>

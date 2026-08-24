@@ -212,6 +212,9 @@ model AuditCheckpoint {
   lastEventId Int
   chainHash   String
   signature   String
+  l2ChainId   Int?
+  l2TxHash    String?
+  l2Status    String?
   createdAt   DateTime @default(now())
 }
 
