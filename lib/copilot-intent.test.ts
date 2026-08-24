@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { followUpsFor, matchCopilotIntent } from "./copilot-intent";
+import { followUpsFor, matchCopilotIntent, waitDeskAnswer } from "./copilot-intent";
 
 describe("matchCopilotIntent", () => {
   it("treats hold-off as a wait follow-up, not a generic cover call", () => {
@@ -14,5 +14,11 @@ describe("matchCopilotIntent", () => {
   it("keeps the SGD WATCH chip after the seeded on-the-water turn", () => {
     expect(matchCopilotIntent("What's on the water?")).toBe("on-water");
     expect(followUpsFor("on-water")[0]).toMatch(/SGD weakens 3%/i);
+  });
+
+  it("uses the engine runway in the wait follow-up, not a fixed 49", () => {
+    const narrative = "Waiting leaves 39 days of cover and raises expected landed cost.";
+    expect(waitDeskAnswer(narrative, 39)).toContain("39 days of cover");
+    expect(waitDeskAnswer(narrative, 39)).not.toMatch(/49 days of cover/);
   });
 });

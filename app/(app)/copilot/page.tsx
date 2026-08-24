@@ -20,7 +20,7 @@ export default async function AskRiceDaxPage() {
           is not sent to another trader.
         </p>
       </header>
-      <CopilotForm initialTurns={initialTurns} />
+      <CopilotForm key={history.map((t) => t.id).join("|")} initialTurns={initialTurns} />
     </div>
   );
 }
