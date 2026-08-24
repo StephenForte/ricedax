@@ -1,6 +1,6 @@
 # Application suggestions (paste into the team Google Doc)
 
-Use this with [eoi-proposal.md](eoi-proposal.md) and the 24 Aug 2026 EnterpriseSG EOI PDF. Trader-facing screens still follow [rice-trader-language.md](rice-trader-language.md). This page is the evaluator vocabulary.
+Use this with [eoi-proposal.md](eoi-proposal.md) and the 24 Aug 2026 EnterpriseSG EOI PDF. Annex B Solution Information (stack, data architecture, deploy, model types, efficacy, training) is in [solution-information.md](solution-information.md). Trader-facing screens still follow [rice-trader-language.md](rice-trader-language.md). This page is the evaluator vocabulary.
 
 ## How the two applications map
 
@@ -78,8 +78,8 @@ Do not open the walkthrough with blockchain.
 - Timeline: briefing → Sep discovery → end Oct prototype → end Dec in trader environments → 2027 scale
 - Costs + 50% grant instrument
 - Team, track record, co-development with traders + SFA
-- Tech stack, data architecture, three-home deploy
-- Model types and “structured call first, prose second”
-- Efficacy frame (Value scorecard)
-- Training so the firm can operate it; 3-year maintain of the base engine
-- Safeguard: no firm data shared without prior approval
+- Tech stack, data architecture, three-home deploy — paste from [solution-information.md](solution-information.md) §§1–3
+- Model types and “structured call first, prose second” — §4
+- Efficacy frame (Value scorecard) — §5
+- Training so the firm can operate it; 3-year maintain of the base engine — §6
+- Safeguard: no firm data shared without prior approval — §2

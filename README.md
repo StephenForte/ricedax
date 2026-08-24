@@ -38,6 +38,7 @@ See [docs/LEARNING.md](docs/LEARNING.md). Rice prices and freight are synthetic.
 
 - [docs/rice-trader-language.md](docs/rice-trader-language.md) — trader language and ontology
 - [docs/application-suggestions.md](docs/application-suggestions.md) — FormSG / Google Doc mapping
+- [docs/solution-information.md](docs/solution-information.md) — Annex B stack, data, deploy, models, efficacy, training
 - [docs/demo-script.md](docs/demo-script.md) — three-minute walkthrough
 - [docs/eoi-proposal.md](docs/eoi-proposal.md) — FormSG draft (team and dollars still open)
 - [docs/LEARNING.md](docs/LEARNING.md) — easy / hard / fake, plus post-EOI spikes
