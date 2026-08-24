@@ -1,0 +1,12 @@
+services:
+  ricedax:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: "3000"
+      DATABASE_URL: "file:./prisma/dev.db"
+      DEMO_PASSWORD: pacific
+      AUDIT_ANCHOR_KEY: local-demo-key
+    # Same image as trader private cloud / trader public cloud.
+    # Bind 0.0.0.0:$PORT. Firm data stays in this container's volume.

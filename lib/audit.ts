@@ -71,7 +71,10 @@ export async function verifyAuditChain(): Promise<{ ok: boolean; checked: number
   }
 
   const key = anchorKey();
-  const checkpoint = await prisma.auditCheckpoint.findFirst({ orderBy: { id: "desc" } });
+  const checkpoint = await prisma.auditCheckpoint.findFirst({
+    where: { l2TxHash: null },
+    orderBy: { id: "desc" },
+  });
   if (key && checkpoint) {
     const expected = signAnchor(checkpoint.lastEventId, checkpoint.chainHash, key);
     const a = Buffer.from(expected, "utf8");

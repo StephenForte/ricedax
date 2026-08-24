@@ -1,4 +1,4 @@
-import { mkdirSync, writeFileSync } from "node:fs";
+import { mkdirSync } from "node:fs";
 import { join } from "node:path";
 import puppeteer from "puppeteer-core";
 
@@ -17,6 +17,7 @@ const pages = [
   ["/network", "06-network.png"],
   ["/rfq/rfq_pacific_001", "07-rfq.png"],
   ["/scorecard", "08-scorecard.png"],
+  ["/ingest", "09-data.png"],
 ];
 
 const browser = await puppeteer.launch({
@@ -51,5 +52,4 @@ for (const [path, file] of pages.slice(1)) {
   console.log("wrote", file);
 }
 
-writeFileSync(join(out, "INDEX.md"), pages.map(([p, f]) => `- ${f} — \`${p}\``).join("\n") + "\n");
 await browser.close();

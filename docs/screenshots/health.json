@@ -1,0 +1,16 @@
+{
+    "ok": true,
+    "service": "ricedax-demo",
+    "packaging": "same-image-three-homes",
+    "homes": [
+        "on-premises",
+        "trader-private-cloud",
+        "trader-public-cloud"
+    ],
+    "thisInstance": {
+        "host": "localhost",
+        "home": "on-premises",
+        "label": "On-premises (this machine)",
+        "evidence": "This request was served from the trader-style local package (npm start / docker compose)."
+    }
+}

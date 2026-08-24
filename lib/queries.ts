@@ -74,6 +74,10 @@ export async function getScorecard() {
   return prisma.scorecardMetric.findMany();
 }
 
+export async function getCopilotHistory() {
+  return prisma.copilotTurn.findMany({ orderBy: { createdAt: "asc" } });
+}
+
 export async function getAuditPreview() {
   const events = await prisma.auditEvent.findMany({ orderBy: { id: "desc" }, take: 8 });
   const tip = events[0]?.hash ?? null;

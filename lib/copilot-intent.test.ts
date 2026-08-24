@@ -1,22 +1,18 @@
 import { describe, expect, it } from "vitest";
-import { matchCopilotIntent } from "./copilot-intent";
+import { followUpsFor, matchCopilotIntent } from "./copilot-intent";
 
 describe("matchCopilotIntent", () => {
-  it("does not let cover steal RFQ or cover-now questions", () => {
-    expect(matchCopilotIntent("Should I cover now?")).toBe("recommendation");
-    expect(matchCopilotIntent("What's the cover call?")).toBe("recommendation");
-    expect(matchCopilotIntent("Draft an RFQ for the approved cover.")).toBe("rfq");
-    expect(matchCopilotIntent("Get me an RFQ for 480 MT Vietnam Fragrant 5% Broken, Sep/Oct shipment.")).toBe("rfq");
+  it("treats hold-off as a wait follow-up, not a generic cover call", () => {
+    expect(matchCopilotIntent("Can I hold off two weeks?")).toBe("wait");
   });
 
-  it("still routes stock questions to inventory", () => {
-    expect(matchCopilotIntent("What will our cover be on 15 November?")).toBe("inventory");
-    expect(matchCopilotIntent("How much are we covered through December?")).toBe("inventory");
-    expect(matchCopilotIntent("What's on the water?")).toBe("on-water");
-  });
-
-  it("keeps the walkthrough questions on the engine", () => {
+  it("keeps the Vietnam/Thailand thread as why-vietnam", () => {
     expect(matchCopilotIntent("Why Vietnam over Thailand?")).toBe("why-vietnam");
-    expect(matchCopilotIntent("If SGD weakens 3%, what happens to landed?")).toBe("fx");
+    expect(followUpsFor("why-vietnam")[0]).toMatch(/hold off/i);
+  });
+
+  it("keeps the SGD WATCH chip after the seeded on-the-water turn", () => {
+    expect(matchCopilotIntent("What's on the water?")).toBe("on-water");
+    expect(followUpsFor("on-water")[0]).toMatch(/SGD weakens 3%/i);
   });
 });

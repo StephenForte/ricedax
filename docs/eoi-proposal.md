@@ -3,7 +3,7 @@
 **Solution name:** RiceDAX  
 **Live exhibit:** https://ricedax.com (passphrase supplied separately)  
 **Submitting organisation:** Fresco — *[legal entity name, ACRA, contact]*  
-**Date:** 22 August 2026  
+**Date:** 24 August 2026  
 **Status:** Draft. Team, track record, and dollar figures are marked `[TO FILL]`.
 
 This proposal leads with the procurement and dual-inventory problem. Architecture and industry infrastructure come after.
@@ -16,11 +16,11 @@ This proposal leads with the procurement and dual-inventory problem. Architectur
 
 RiceDAX is a private decision engine for each rice trader and a shared reference layer for the rice market.
 
-Each participating firm gets a **private node** that stays in its own environment. The node reads that firm's inventory, sales, purchase orders and supplier terms, combines them with common market and regulatory information, and produces an explicit recommendation: buy, watch or hold; how much; which origin; in what window; why; what happens if they wait; and which assumption would flip the call.
+Each participating firm gets a **private workspace** that stays in its own environment. The workspace reads that firm's stock, sales, purchase orders and supplier terms, combines them with common market and regulatory information, and produces an explicit cover recommendation: cover / watch / hold off; how much; which origin; in what window; why; what happens if they wait; and which assumption would flip the call.
 
-A conversational copilot sits on the same engine. A cockpit sits beside it. That is the pair of applications EnterpriseSG asked for.
+**Ask RiceDAX is the chatbot** (the anchor application in the EOI). **Overview is the dashboard** beside it. Both sit on one engine.
 
-The same recommendation can become an RFQ. That is how RiceDAX later sits inside the procurement process rather than beside it. We do not take principal. We do not handle customer money.
+The same cover can become an RFQ. Export payloads sit the decision back into Excel, ERP, CRM and email. We do not take principal. We do not handle customer money.
 
 ### 1.2 Timeline
 
@@ -28,7 +28,7 @@ The same recommendation can become an RFQ. That is how RiceDAX later sits inside
 | --- | --- | --- |
 | Appointment briefing | within 3 working days of LoA | Attend EnterpriseSG briefing |
 | Discovery | September 2026 | SFA + selected traders: data mapping, dual-inventory rules, baseline measurements, Founding Member working model |
-| Prototype | end October 2026 | Private node, decision engine, copilot, cockpit, first Excel/ERP ingest, common data layer |
+| Prototype | end October 2026 | Private workspace, decision engine, chatbot (Ask RiceDAX), dashboard (Overview), Excel/ERP ingest and export, common data layer, three-home deploy package |
 | Solution in trader environments | end December 2026 | On-prem / private cloud / trader public cloud packages; validation; monitoring; training |
 | Scale | from Q1 2027 | Additional Singapore rice traders; shared schemas; Member Council for standards |
 
@@ -78,14 +78,15 @@ Founding Members get product influence and early economics. They do not need to 
 
 | Layer | v0 / October | Notes |
 | --- | --- | --- |
-| Data | CSV/Excel ingest + labelled series (private / permissioned / aggregated / common) | Firm data never leaves the node |
+| Data | CSV/Excel ingest + labelled series (private / permissioned / aggregated / common) | Firm data never leaves the workspace |
 | Engine | Typed rules for cover, stockpile buffer, landed cost, FX, supply-risk | Testable without a model |
 | Forecasting | Trailing velocity now; classical demand/inventory models in refinement | Not a "rice foundation model" |
-| Copilot | Tool-using LLM over the engine output | Optional; deterministic tools already answer the walkthrough |
-| Applications | Next.js cockpit + copilot | Two surfaces, one engine |
-| Audit | Hash-chained event log + signed checkpoints | Anchor can move later without a rewrite |
+| Copilot | Tool-using LLM over the engine output; exhibit is a multi-turn deterministic chatbot | Optional live LLM; tools already answer the walkthrough |
+| Applications | Next.js dashboard (Overview) + chatbot (Ask RiceDAX) | Two surfaces, one engine |
+| Export | CSV / ERP JSON / CRM note / RFQ email draft | Connectors after we see the firm's systems |
+| Audit | Local verified event log + ForteL2 integrity receipt of a 32-byte tip | Demo receipt in the exhibit; rice data never posted |
 | Store | SQLite or the trader's Postgres | Same schema |
-| Deploy | Docker / Node on-prem, private VPC, or trader public cloud | Exhibit today is Render in Singapore |
+| Deploy | Docker / Node on-prem, trader VPC, or trader public cloud | Exhibit today is Render in Singapore |
 
 ### 1.8 Data architecture and safeguards
 
@@ -104,11 +105,11 @@ CCCS framing: we do not pool current, individualised strategic information among
 
 ### 1.9 Deployment
 
-The same application package runs three ways. The trader chooses.
+The same application package runs three ways. The trader chooses. Evidence is on the Data page and at `/health`.
 
-1. **On-premises** — Node process + local SQLite/Postgres, no outbound firm data.
+1. **On-premises** — Docker Compose or Node + local SQLite/Postgres. `docker compose up` or `npm start`. `/health` reports `on-premises` when served from localhost.
 2. **Trader private cloud** — same image in the trader's VPC.
-3. **Trader public cloud** — same image in the trader's own AWS/Azure/GCP (or equivalent) account. https://ricedax.com is this packaging, operated by us for the exhibit only.
+3. **Trader public cloud** — same image in the trader's own AWS/Azure/GCP account. https://ricedax.com is this packaging, operated by us for the exhibit only.
 
 Prerequisites: a weekly inventory/sales extract (CSV or Excel is enough for October), outbound HTTPS if they want live FX, and someone who can approve a recommendation.
 
@@ -158,7 +159,7 @@ A Founding Member Council governs those shared standards. Fresco keeps product e
 - Firm-level recommendations are generated locally.
 - Firm-level data is not stored by the provider.
 
-The exhibit at https://ricedax.com demonstrates the cockpit, the copilot, dual inventory, an explainable BUY, the private/network split, and the first RFQ step.
+The exhibit at https://ricedax.com demonstrates the dashboard, the chatbot thread, dual stock pools, an explainable COVER call, private/market split, RFQ stop, import/export payloads, three-home deploy evidence, and an integrity receipt of the audit trail.
 
 ---
 
@@ -172,4 +173,4 @@ If RiceDAX later coordinates transactions across independent firms, the architec
 
 ## 4. Walkthrough
 
-See [demo-script.md](demo-script.md). Screenshots in [screenshots/](screenshots/).
+See [demo-script.md](demo-script.md). Screenshots in [screenshots/](screenshots/). Paste-ready FormSG mapping: [application-suggestions.md](application-suggestions.md).
