@@ -76,6 +76,8 @@ Founding Members get product influence and early economics. They do not need to 
 
 ### 1.7 Tech stack
 
+Detail for FormSG: [solution-information.md](solution-information.md) §1.
+
 | Layer | v0 / October | Notes |
 | --- | --- | --- |
 | Data | CSV/Excel ingest + labelled series (private / permissioned / aggregated / common) | Firm data never leaves the workspace |
@@ -89,6 +91,8 @@ Founding Members get product influence and early economics. They do not need to 
 | Deploy | Docker / Node on-prem, trader VPC, or trader public cloud | Exhibit today is Render in Singapore |
 
 ### 1.8 Data architecture and safeguards
+
+Detail for FormSG: [solution-information.md](solution-information.md) §2.
 
 Four classes, enforced in the product (every evidence row is tagged):
 
@@ -105,6 +109,8 @@ CCCS framing: we do not pool current, individualised strategic information among
 
 ### 1.9 Deployment
 
+Detail for FormSG: [solution-information.md](solution-information.md) §3.
+
 The same application package runs three ways. The trader chooses. Evidence is on the Data page and at `/health`.
 
 1. **On-premises** — Docker Compose or Node + local SQLite/Postgres. `docker compose up` or `npm start`. `/health` reports `on-premises` when served from localhost.
@@ -115,6 +121,8 @@ Prerequisites: a weekly inventory/sales extract (CSV or Excel is enough for Octo
 
 ### 1.10 Model types
 
+Detail for FormSG: [solution-information.md](solution-information.md) §4.
+
 - Rules and landed-cost arithmetic (shipping now).
 - Predictive models for demand and inventory in the refinement phase, trained only on that firm's history, on that firm's machine.
 - A frontier or small LLM for explanation and copilot, never as the source of the buy/watch/hold bit.
@@ -122,6 +130,8 @@ Prerequisites: a weekly inventory/sales extract (CSV or Excel is enough for Octo
 Decision: the structured recommendation is computed first. Prose is layered on. If the language model is down, the cockpit still works.
 
 ### 1.11 Efficacy
+
+Detail for FormSG: [solution-information.md](solution-information.md) §5.
 
 The scorecard at https://ricedax.com/scorecard is the measurement frame:
 
@@ -138,6 +148,8 @@ We will set numerical targets with each Founding Member in September, from their
 
 ### 1.12 Training and capability
 
+Detail for FormSG: [solution-information.md](solution-information.md) §6.
+
 - Buyer workshop on the cockpit and the override habit (use, ignore, tell us why).
 - One technical owner per firm: how to drop a new extract, how to read the audit log, how to run the node.
 - Written runbook. After December the firm can operate the node without us in the room. We remain on an SLA for the base engine and common data.
@@ -153,6 +165,8 @@ A Founding Member Council governs those shared standards. Fresco keeps product e
 ---
 
 ## 2. Solution information (Annex B)
+
+Paste-ready expansion of these bullets: [solution-information.md](solution-information.md).
 
 - A single base rice-domain engine is co-developed with participating traders on public/common data and SFA stockpile rules.
 - Each trader runs it inside their own environment and customises it with ERP/CRM/email/Excel.
@@ -173,4 +187,4 @@ If RiceDAX later coordinates transactions across independent firms, the architec
 
 ## 4. Walkthrough
 
-See [demo-script.md](demo-script.md). Screenshots in [screenshots/](screenshots/). Paste-ready FormSG mapping: [application-suggestions.md](application-suggestions.md).
+See [demo-script.md](demo-script.md). Screenshots in [screenshots/](screenshots/). Paste-ready FormSG mapping: [application-suggestions.md](application-suggestions.md). Annex B Solution Information: [solution-information.md](solution-information.md).
