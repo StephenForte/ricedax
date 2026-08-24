@@ -1,6 +1,8 @@
 # RiceDAX
 
-Private decision cockpit for a Singapore rice trader, plus a thin shared-market layer. This repository is the EnterpriseSG walkthrough: synthetic Pacific Grain data, a typed BUY/WATCH/HOLD engine, copilot, RFQ compare, and a hash-chained audit log.
+Private decision workspace for a Singapore rice trader, plus a thin shared-market layer. This repository is the EnterpriseSG walkthrough: synthetic Pacific Grain data, a typed COVER/WATCH/HOLD engine, Ask RiceDAX, RFQ compare, and a local audit trail.
+
+Trader-facing copy follows [docs/rice-trader-language.md](docs/rice-trader-language.md).
 
 Live exhibit: [https://ricedax.com](https://ricedax.com) (passphrase shared separately). Deploy notes: [docs/RENDER.md](docs/RENDER.md).
 
@@ -26,6 +28,7 @@ See [docs/LEARNING.md](docs/LEARNING.md). Rice prices and freight are synthetic.
 
 ## Docs
 
+- [docs/rice-trader-language.md](docs/rice-trader-language.md) — trader language and ontology
 - [docs/demo-script.md](docs/demo-script.md) — three-minute walkthrough
 - [docs/eoi-proposal.md](docs/eoi-proposal.md) — FormSG draft (team and dollars still open)
 - [docs/LEARNING.md](docs/LEARNING.md) — easy / hard / fake, plus post-EOI spikes

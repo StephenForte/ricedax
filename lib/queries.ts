@@ -104,10 +104,10 @@ async function latestTicks() {
 
 function nextActionLabel(status: string): string {
   if (status === "RECOMMENDATION") return "Review and approve the Vietnam cover";
-  if (status === "APPROVED") return "Draft RFQ to Mekong and Chao Phraya";
-  if (status === "RFQ_DRAFTED" || status === "QUOTES_IN") return "Compare landed quotes";
-  if (status === "COMPARED") return "Reassess supplier quotes Friday";
-  return "Open the recommendation";
+  if (status === "APPROVED") return "Get offers from Mekong and Chao Phraya";
+  if (status === "RFQ_DRAFTED" || status === "QUOTES_IN") return "Compare offers";
+  if (status === "COMPARED") return "Check offers again Friday";
+  return "View cover";
 }
 
 function average(xs: number[]): number {

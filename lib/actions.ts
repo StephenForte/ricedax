@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { appendAudit } from "./audit";
 import { prisma } from "./db";
 import { IDS } from "./engine/types";
+import { SHIPMENT_PERIOD } from "./language";
 import { assertTransition } from "./state";
 
 export async function resetDemo() {
@@ -56,6 +57,7 @@ export async function createRfq() {
     grade: rec.grade,
     tonnes: rec.tonnes,
     window: `${rec.windowDaysLow}–${rec.windowDaysHigh} days`,
+    shipment: SHIPMENT_PERIOD,
     incoterm: "CFR Singapore",
     notes: "Synthetic RFQ for the RiceDAX walkthrough. Not a live enquiry.",
   };
@@ -96,7 +98,7 @@ async function seedQuotes() {
         freightUsdPerT: 29,
         landedUsdPerT: 608,
         leadDays: 18,
-        terms: "FOB HCMC · 5% broken · payment CAD",
+        terms: "FOB HCMC · Fragrant 5% Broken · CAD · 50kg bags",
       },
       {
         id: "q_bangkok",
@@ -106,7 +108,7 @@ async function seedQuotes() {
         freightUsdPerT: 25,
         landedUsdPerT: 643,
         leadDays: 22,
-        terms: "FOB Bangkok · Hom Mali · payment CAD",
+        terms: "FOB Bangkok · Hom Mali 100% Grade B · CAD · 50kg bags",
       },
     ],
   });

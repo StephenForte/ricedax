@@ -2,8 +2,8 @@
   {
     "id": "pol_sfa_buffer",
     "date": "2026-08-08",
-    "title": "SFA stockpile reporting window",
-    "body": "Synthetic policy note: next dual-inventory attestation for participating importers is due mid-September. Commercial stock cannot be counted toward the emergency stockpile.",
+    "title": "MSR reporting window",
+    "body": "Synthetic policy note: next MSR attestation for participating importers is due mid-September. Commercial stock cannot be counted toward MSR stock.",
     "severity": "info",
     "dataClass": "common"
   },
@@ -11,7 +11,7 @@
     "id": "pol_mekong_weather",
     "date": "2026-08-12",
     "title": "Mekong late-season rainfall",
-    "body": "Synthetic weather note: delayed rains in the Mekong Delta raise a modest risk of tighter 5% broken availability in 45–60 days. Not a disruption. Treat as elevated, not high.",
+    "body": "Synthetic weather note: delayed rains in the Mekong Delta raise a modest risk of tighter fragrant 5% availability in 45–60 days. Not a disruption. Treat as elevated, not high.",
     "severity": "elevated",
     "dataClass": "common"
   },
@@ -27,7 +27,7 @@
     "id": "pol_inr_watch",
     "date": "2026-07-22",
     "title": "India export-policy watch",
-    "body": "Synthetic policy note: no new restriction this week. Keep Pakistan Basmati as a watch origin rather than a primary cover.",
+    "body": "Synthetic policy note: no new restriction this week. Pakistan 1121 Steam Basmati 2% stays on the book as its own product, not a substitute for Vietnam fragrant.",
     "severity": "info",
     "dataClass": "common"
   }

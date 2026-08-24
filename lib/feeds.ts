@@ -41,9 +41,9 @@ export async function fetchUsdSgd(): Promise<PublicFeed> {
 
 export function missingCommodityFeeds(): string[] {
   return [
-    "Licensed Vietnam 5% broken FOB (Platts / local broker sheet)",
-    "Licensed Thai Hom Mali FOB",
+    "Licensed Vietnam Fragrant 5% Broken FOB (assessment / broker indications)",
+    "Licensed Thai Hom Mali 100% Grade B FOB",
     "Actual Ho Chi Minh–Singapore and Bangkok–Singapore parcel freight",
-    "SFA stockpile circulars as a structured feed rather than pasted notes",
+    "MSR notices and requirements as a structured feed rather than pasted notes",
   ];
 }

@@ -2,16 +2,16 @@ import { ingestTraderDrop } from "@/lib/ingest";
 
 export const dynamic = "force-dynamic";
 
-export default function IngestPage() {
+export default function DataPage() {
   const drop = ingestTraderDrop();
   return (
     <div className="space-y-6">
       <header>
-        <p className="text-[11px] uppercase tracking-[0.2em] text-[var(--gold)]">Post-EOI spike</p>
-        <h2 className="serif text-3xl">Trader CSV drop</h2>
+        <p className="text-[11px] uppercase tracking-[0.2em] text-[var(--gold)]">Prototype data intake</p>
+        <h2 className="serif text-3xl">Trader data import</h2>
         <p className="mt-2 max-w-2xl text-[var(--ink-soft)]">
-          Same files a trader would email: inventory, weekly sales, open POs, suppliers. The engine already runs on this
-          drop. Messy extra columns and merged Excel headers are the next break we expect.
+          Same files a trader would send: stock, sales history, open POs, supplier master. The prototype already runs
+          directly from these files. The next prototype step is handling common Excel variations.
         </p>
       </header>
       <section className="panel p-5">

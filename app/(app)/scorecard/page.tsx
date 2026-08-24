@@ -5,7 +5,7 @@ import { verifyAuditChain } from "@/lib/audit";
 
 export const dynamic = "force-dynamic";
 
-export default async function ScorecardPage() {
+export default async function ValuePage() {
   const metrics = await getScorecard();
   const audit = await getAuditPreview();
   const verified = await verifyAuditChain();
@@ -14,11 +14,10 @@ export default async function ScorecardPage() {
   return (
     <div className="space-y-6">
       <header>
-        <p className="text-[11px] uppercase tracking-[0.2em] text-[var(--gold)]">Efficacy</p>
+        <p className="text-[11px] uppercase tracking-[0.2em] text-[var(--gold)]">Value &amp; performance</p>
         <h2 className="serif text-3xl">Value scorecard</h2>
         <p className="mt-2 max-w-2xl text-[var(--ink-soft)]">
-          EnterpriseSG asked how we will measure the solution. These are the dimensions. Several values are placeholders
-          until a live baseline is agreed with the trader.
+          How RiceDAX value is measured. Several figures are placeholders until a live baseline is agreed with the trader.
         </p>
       </header>
       <section className="panel overflow-x-auto p-5">
@@ -46,14 +45,21 @@ export default async function ScorecardPage() {
         </table>
       </section>
       <section className="panel p-5">
-        <h3 className="serif text-xl">Signed event log</h3>
+        <h3 className="serif text-xl">Audit trail</h3>
         <p className="mt-2 text-sm text-[var(--ink-soft)]">
-          Hash-chained locally. The tip can later be anchored on a shared rail without moving rice data. Chain{" "}
-          {verified.ok ? "verifies" : "FAILED"} · {verified.checked} events.
+          {verified.checked} verified events
+          {verified.ok ? "" : " — integrity check failed"}.
         </p>
-        {commitment ? (
-          <p className="mt-2 break-all font-mono text-[11px] text-[var(--ink-soft)]">Tip commitment {commitment}</p>
-        ) : null}
+        <details className="mt-3 text-sm text-[var(--ink-soft)]">
+          <summary className="cursor-pointer text-[11px] uppercase tracking-wider text-[var(--gold)]">Technical disclosure</summary>
+          <p className="mt-2">
+            Events are recorded locally so the trail can be checked without exposing private trader data. Hash and
+            anchoring details stay here, not on the trading screens.
+          </p>
+          {commitment ? (
+            <p className="mt-2 break-all font-mono text-[11px]">Integrity checkpoint {commitment}</p>
+          ) : null}
+        </details>
         <ul className="mt-4 space-y-2 text-sm">
           {audit.events.map((e) => (
             <li key={e.id} className="border-t border-[var(--rule)] pt-2">

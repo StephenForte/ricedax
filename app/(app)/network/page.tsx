@@ -1,11 +1,12 @@
 import { pct } from "@/components/Format";
 import { Sparkline } from "@/components/Sparkline";
 import { fetchUsdSgd, missingCommodityFeeds } from "@/lib/feeds";
+import { dataClassLabel } from "@/lib/language";
 import { getNetwork } from "@/lib/queries";
 
 export const dynamic = "force-dynamic";
 
-export default async function NetworkPage() {
+export default async function MarketPage() {
   const { series, notes } = await getNetwork();
   const fxLive = await fetchUsdSgd();
   const missing = missingCommodityFeeds();
@@ -14,10 +15,10 @@ export default async function NetworkPage() {
     <div className="space-y-6">
       <header>
         <p className="text-[11px] uppercase tracking-[0.2em] text-[var(--gold-2)]">RiceDAX Network</p>
-        <h2 className="serif text-3xl">Shared market intelligence</h2>
+        <h2 className="serif text-3xl">Market</h2>
         <p className="mt-2 max-w-2xl text-[var(--ink-soft)]">
-          Common data only: public or synthetic origin prices, freight, FX, and policy notes. No trader inventories, no
-          purchase intentions, no competitor positions.
+          Market data only: origin indications, freight, FX, and policy notes. No trader stock, no purchase intentions, no
+          competitor positions.
         </p>
       </header>
       <div className="grid gap-4 md:grid-cols-2">
@@ -29,7 +30,7 @@ export default async function NetworkPage() {
             <article key={s.id} className="panel p-5">
               <div className="flex items-start justify-between gap-3">
                 <div>
-                  <p className="text-[11px] uppercase tracking-wider text-[var(--ink-soft)]">{s.dataClass}</p>
+                  <p className="text-[11px] uppercase tracking-wider text-[var(--ink-soft)]">{dataClassLabel(s.dataClass)}</p>
                   <h3 className="serif text-xl">{s.label}</h3>
                   <p className="mt-1 text-sm">
                     {last ? last.value.toFixed(s.unit.includes("SGD") ? 3 : 1) : "—"} {s.unit}{" "}
@@ -43,11 +44,11 @@ export default async function NetworkPage() {
         })}
       </div>
       <section className="panel p-5">
-        <h3 className="serif text-xl">Public FX spike</h3>
+        <h3 className="serif text-xl">Live FX reference</h3>
         <p className="mt-2 text-sm">
           {fxLive.label}: {fxLive.value.toFixed(4)} · {fxLive.status} · {fxLive.source} · as of {fxLive.asOf}
         </p>
-        <p className="mt-3 text-[11px] uppercase tracking-wider text-[var(--ink-soft)]">Still missing</p>
+        <p className="mt-3 text-[11px] uppercase tracking-wider text-[var(--ink-soft)]">Production data feeds planned</p>
         <ul className="mt-2 list-disc pl-5 text-sm text-[var(--ink-soft)]">
           {missing.map((m) => (
             <li key={m}>{m}</li>
@@ -55,7 +56,7 @@ export default async function NetworkPage() {
         </ul>
       </section>
       <section className="panel p-5">
-        <h3 className="serif text-xl">Network alerts</h3>
+        <h3 className="serif text-xl">Market notes</h3>
         <ul className="mt-4 space-y-4">
           {notes.map((n) => (
             <li key={n.id} className="border-t border-[var(--rule)] pt-3">

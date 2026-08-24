@@ -4,8 +4,8 @@ Written as we built, so October is not a second guess.
 
 ## Easy
 
-- Cockpit + inventory + recommendation screens over structured fixtures.
-- Copilot that calls the same engine (`getInventory`, `getRecommendation`, `runScenario`, `draftRfq`).
+- Overview + stock & cover + cover screens over structured fixtures.
+- Ask RiceDAX that calls the same engine (`getInventory`, `getRecommendation`, `runScenario`, `draftRfq`).
 - RFQ JSON + two canned quotes + landed-cost compare.
 - Private vs network visual that does not need an L2 to be understood.
 - Hash-chained local audit with an HMAC checkpoint. Tip commitment is 32 bytes and contains no rice data.
@@ -32,9 +32,9 @@ Written as we built, so October is not a second guess.
 | Vietnam / Thai / Pakistan prices | Synthetic weekly series |
 | Freight HCMC–SIN / BKK–SIN | Synthetic |
 | USD/SGD | Can be live (Frankfurter / ECB). Falls back to 1.35 |
-| SFA stockpile rule | Synthetic stand-in, not the circular |
+| SFA / MSR rule | Synthetic stand-in, not the circular |
 | Scorecard "savings" | Placeholders vs a made-up baseline |
-| Copilot | Deterministic tools + templated prose. Optional LLM key unused in v0 |
+| Ask RiceDAX | Deterministic tools + templated prose. Optional LLM key unused in v0 |
 | Quotes from Mekong / Chao Phraya | Canned |
 
 ## Post-30-August spikes

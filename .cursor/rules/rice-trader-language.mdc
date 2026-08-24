@@ -1,0 +1,28 @@
+---
+description: RiceDAX trader-facing language. Primary UI sounds like a rice procurement desk.
+alwaysApply: true
+---
+
+# RiceDAX trader language
+
+Follow `docs/rice-trader-language.md` for all trader-facing copy, copilot answers, and demo script.
+
+The primary UI is **100% trader**. Do not mix in SaaS, grant/evaluator, engineering, or L2 wording on main screens.
+
+## Hard product names (this demo)
+
+- Cover: **Vietnam Fragrant 5% Broken**
+- Alternative: **Thai Hom Mali 100% Grade B** (substitution only, and say so)
+- Not a substitute: **Pakistan 1121 Steam Basmati 2%**
+- Singapore obligation: **MSR stock / MSR requirement / MSR buffer / MSR top-up** (not “SFA stockpile”)
+
+## Hard conventions
+
+- Central concept is **cover** (current / target / open requirement / cover now / hold off)
+- Qty **MT**, prices **US$/MT**, named basis (**FOB**, **est. CFR Singapore**). FOB + freight is not “landed cost”
+- Nav labels: **Overview | Stock & Cover | Cover | Market | RFQ | Ask RiceDAX | Value | Data**
+- Decision window ≠ shipment period. Cover within 7–14 days. RFQ: Sep/Oct 2026
+- Assessments / indications ≠ firm supplier offers
+- Hash, chain, node, ingest, spike, efficacy, CSV drop stay off the main UI
+
+If a phrase would not be said on a physical rice desk, rewrite it.
