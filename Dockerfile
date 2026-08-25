@@ -10,4 +10,8 @@ COPY . .
 RUN npx prisma generate && npm run build
 ENV PORT=3000
 EXPOSE 3000
+# Official node image ships a `node` user (uid 1000). Own /app so prisma db
+# push can write SQLite at runtime without running the process as root.
+RUN chown -R node:node /app
+USER node
 CMD ["npm", "start"]
