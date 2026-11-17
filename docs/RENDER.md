@@ -15,6 +15,7 @@ Render could not create `ricedax-demo` because the GitHub App cannot see this ne
 Fill secrets when prompted:
 
 - `DEMO_PASSWORD` — share out of band. Local default is `pacific`. Suggested live value: `pacific-grain`
+- `DEMO_SESSION_SECRET` — long random string used to HMAC-sign the demo session cookie (Blueprint can generate). Do not use a fixed cookie value like `ok`.
 - `AUDIT_ANCHOR_KEY` — any long random string
 - `OPENAI_API_KEY` — leave blank; v0 copilot is deterministic
 

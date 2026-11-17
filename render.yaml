@@ -20,6 +20,8 @@ services:
         value: file:./prisma/dev.db
       - key: DEMO_PASSWORD
         sync: false
+      - key: DEMO_SESSION_SECRET
+        generateValue: true
       - key: AUDIT_ANCHOR_KEY
         sync: false
       - key: OPENAI_API_KEY

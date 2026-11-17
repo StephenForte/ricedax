@@ -1,9 +1,10 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { DEMO_SESSION_COOKIE, verifySessionToken } from "@/lib/demo-session";
 
 const PUBLIC = ["/login", "/health", "/robots.txt", "/api/demo-login"];
 
-export function middleware(req: NextRequest) {
+export async function middleware(req: NextRequest) {
   if (process.env.CAPTURE_OPEN === "1") {
     return NextResponse.next();
   }
@@ -11,7 +12,8 @@ export function middleware(req: NextRequest) {
   if (PUBLIC.some((p) => pathname === p || pathname.startsWith("/health") || pathname.startsWith("/api/demo-login"))) {
     return NextResponse.next();
   }
-  if (req.cookies.get("ricedax_demo")?.value === "ok") {
+  const session = req.cookies.get(DEMO_SESSION_COOKIE)?.value;
+  if (await verifySessionToken(session)) {
     return NextResponse.next();
   }
   const url = req.nextUrl.clone();
