@@ -71,7 +71,7 @@ Every evidence row on Cover is tagged. The Market pane shows only common series.
 | Control | Now (exhibit) | October–December |
 | --- | --- | --- |
 | **Residency** | Workspace database and files live with the process. Docker Compose comment: firm data stays in this container’s volume. The Render exhibit reseeds on restart (ephemeral disk); that is exhibit packaging, not the firm deploy. | Trader-owned machine, VPC disk, or cloud account. No sync to Fresco. |
-| **Access** | Demo passphrase (`DEMO_PASSWORD`), httpOnly cookie, public routes limited to `/login`, `/health`, `/robots.txt`. | Per-user roles (buyer, approver, technical owner). Passphrase was an exhibit gate. |
+| **Access** | Demo passphrase (`DEMO_PASSWORD`), httpOnly HMAC-signed session cookie (`DEMO_SESSION_SECRET`), public routes limited to `/login`, `/health`, `/robots.txt`. | Per-user roles (buyer, approver, technical owner). Passphrase was an exhibit gate. |
 | **Least data in prompts** | Ask RiceDAX calls tools; it does not dump the book into a prompt. Competitor / other-trader questions are refused in code. | Same refusal. LLM, if enabled, is tool-using over engine output, not a dump of private rows. |
 | **Audit** | Append-only hash chain of recommendation, approval, RFQ, and copilot turns. HMAC checkpoint. Optional 32-byte tip on ForteL2 — never stock, prices, or identity. Exhibit receipt is labelled **demo**. | Same local chain. Live RPC optional. Trading screens do not change. |
 | **Monitoring** | `GET /health` (ok, packaging, which home). Copilot daily cap. | Health plus override counts, ingest-breakage, and recommendation throughput. |
